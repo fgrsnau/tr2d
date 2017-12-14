@@ -40,6 +40,8 @@ public class Tr2dHdddwdPanel extends JPanel implements ActionListener {
 	private void buildGui() {
 		importSolution = new JButton( "import..." );
 		importSolution.addActionListener( this );
+
+		this.add( importSolution, BorderLayout.NORTH );
 	}
 
 	/**

@@ -21,13 +21,14 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import com.indago.tr2d.Tr2dContext;
 import org.scijava.log.Logger;
 import org.scijava.ui.behaviour.io.InputTriggerConfig;
 import org.scijava.ui.behaviour.io.yaml.YamlConfigIO;
 import org.scijava.ui.behaviour.util.InputActionBindings;
 
 import com.indago.IndagoLog;
+import com.indago.log.LoggingPanel;
+import com.indago.tr2d.Tr2dContext;
 import com.indago.tr2d.Tr2dLog;
 import com.indago.tr2d.ui.model.Tr2dModel;
 
@@ -35,7 +36,6 @@ import bdv.util.Bdv;
 import bdv.util.BdvFunctions;
 import bdv.util.BdvHandlePanel;
 import bdv.util.BdvSource;
-import com.indago.log.LoggingPanel;
 
 /**
  * @author jug
@@ -54,6 +54,7 @@ public class Tr2dMainPanel extends JPanel implements ActionListener, ChangeListe
 	private JPanel tabFlow;
 	private Tr2dTrackingPanel tabTracking;
 	private Tr2dExportPanel tabExport;
+	private Tr2dHdddwdPanel tabHdddwd;
 
 	private BdvHandlePanel bdvData;
 
@@ -73,7 +74,7 @@ public class Tr2dMainPanel extends JPanel implements ActionListener, ChangeListe
 		buildGui(logger);
 	}
 
-	private void buildGui(Logger logger) {
+	private void buildGui(final Logger logger) {
 		// --- INPUT TRIGGERS ---------------------------------------------------------------------
 		model.setDefaultInputTriggerConfig( loadInputTriggerConfig() );
 
@@ -102,9 +103,13 @@ public class Tr2dMainPanel extends JPanel implements ActionListener, ChangeListe
 		// === TAB EXPORT========================================================================
 		tabExport = new Tr2dExportPanel( model );
 
+		// === TAB HDDDWD========================================================================
+		tabHdddwd = new Tr2dHdddwdPanel( model );
+
 		// --- ASSEMBLE PANEL ---------------------------------------------------------------------
 
 		tabs.add( "data", tabData );
+		tabs.add( "hdddwd", tabHdddwd );
 		tabs.add( "segments", tabSegmentation );
 		tabs.add( "flow", tabFlow );
 		tabs.add( "tracking", tabTracking );
@@ -122,8 +127,8 @@ public class Tr2dMainPanel extends JPanel implements ActionListener, ChangeListe
 		this.add( splitPane, BorderLayout.CENTER );
 	}
 
-	private Logger setupLogger(Logger logger, String name) {
-		Logger log = logger.subLogger(name);
+	private Logger setupLogger(final Logger logger, final String name) {
+		final Logger log = logger.subLogger(name);
 		log.addLogListener(logPanel);
 		return log;
 	}
